@@ -1,4 +1,6 @@
-﻿namespace DemoApp
+﻿using log4net;
+
+namespace DemoApp
 {
     public class ResponseFactory : IResponseFactory
     {

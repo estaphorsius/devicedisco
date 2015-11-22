@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Threading;
+using log4net;
+using Microsoft.Owin.Hosting;
 
 namespace DemoApp
 {

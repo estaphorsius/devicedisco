@@ -1,4 +1,9 @@
-﻿using DemoApp;
+﻿using System.Web.Http;
+using DemoApp;
+using Microsoft.Owin.FileSystems;
+using Microsoft.Owin.StaticFiles;
+using Owin;
+using Microsoft.Owin;
 
 [assembly: OwinStartup(typeof(OwinStartup))]
 
