@@ -4,7 +4,7 @@ namespace DemoApp
 {
     public interface ISocketFactory
     {
-        Socket CreateListeningSocket();
-        Socket CreateClientSocket();
+        ISocket CreateListeningSocket();
+        ISocket CreateClientSocket();
     }
 }

@@ -14,7 +14,7 @@ namespace DemoApp
         private readonly IMessageParser _messageParser;
         private readonly ILog _log = LogManager.GetLogger(typeof(DiscoveryListener));
 
-        private Socket _listeningSocket;
+        private ISocket _listeningSocket;
         private readonly object _locker = new object();
         private bool _started;
         private bool _stopped;
@@ -46,7 +46,7 @@ namespace DemoApp
             EndPoint remoteEndpoint = new IPEndPoint(IPAddress.Any, Constants.MulticastPort);
             var serverState = new ServerState();
 
-            _listeningSocket.BeginReceiveFrom(serverState.Buffer, 0, serverState.Buffer.Length, SocketFlags.None,
+            _listeningSocket.BeginReceiveFrom(serverState.Buffer,
                 ref remoteEndpoint, OnReceive, serverState);
 
             _stopped = false;
@@ -98,8 +98,7 @@ namespace DemoApp
 
                     // enter new listening loop
                     serverState = new ServerState();
-                    _listeningSocket.BeginReceiveFrom(serverState.Buffer, 0, serverState.Buffer.Length,
-                        SocketFlags.None,
+                    _listeningSocket.BeginReceiveFrom(serverState.Buffer,
                         ref remoteEndpoint, OnReceive, serverState);
                 }
             }

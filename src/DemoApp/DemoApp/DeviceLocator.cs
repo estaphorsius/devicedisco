@@ -11,7 +11,7 @@ namespace DemoApp
         private readonly ISocketFactory _socketFactory;
         private readonly IRequestFactory _requestFactory;
         private readonly IMessageParser _messageParser;
-        private Socket _socket;
+        private ISocket _socket;
 
         public DeviceLocator(ISocketFactory socketFactory, IRequestFactory requestFactory, IMessageParser messageParser)
         {
@@ -28,7 +28,7 @@ namespace DemoApp
             byte[] requestBytes = Encoding.ASCII.GetBytes(request);
 
             var responseThread = new Thread(GetSearchResponse);
-            _socket.SendTo(requestBytes, 0, requestBytes.Length, SocketFlags.None,
+            _socket.SendTo(requestBytes, SocketFlags.None,
                 new IPEndPoint(IPAddress.Parse(Constants.MulticastAddress), Constants.MulticastPort));
             responseThread.Start();
             Thread.Sleep(Convert.ToInt32(timeout.TotalMilliseconds));

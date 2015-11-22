@@ -5,25 +5,28 @@ namespace DemoApp
 {
     public class SocketFactory : ISocketFactory
     {
-        public Socket CreateListeningSocket()
+        public ISocket CreateListeningSocket()
         {
-            Socket result = null;
+            Socket socket = null;
             EndPoint localEndPoint = new IPEndPoint(IPAddress.Any, Constants.MulticastPort);
-            result = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            result.Bind(localEndPoint);
-            result.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership,
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.Bind(localEndPoint);
+            socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership,
                 new MulticastOption(IPAddress.Parse(Constants.MulticastAddress)));
-            result.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 2);
+            socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 2);
 
+            var result = new DiscoSocket(socket);
             return result;
         }
 
-        public Socket CreateClientSocket()
+        public ISocket CreateClientSocket()
         {
-            var result = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            result.Bind(new IPEndPoint(IPAddress.Any, Constants.MulticastPort));
-            result.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership,
+            var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.Bind(new IPEndPoint(IPAddress.Any, Constants.MulticastPort));
+            socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership,
                 new MulticastOption(IPAddress.Parse(Constants.MulticastAddress), IPAddress.Any));
+
+            var result = new DiscoSocket(socket);
             return result;
         }
     }

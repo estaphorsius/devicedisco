@@ -5,8 +5,6 @@ using Microsoft.Owin.Hosting;
 
 namespace DemoApp
 {
-
-
     class Program
     {
         private static Timer _searchTimer;
