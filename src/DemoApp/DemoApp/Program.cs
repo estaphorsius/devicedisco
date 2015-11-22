@@ -23,7 +23,7 @@ namespace DemoApp
             var messageParser = new MessageParser();
             var deviceInformation = new DeviceInformation
             {
-                Location = "http://192.168.0.30/device.xml",
+                Location = "http://192.168.0.251/device.xml",
                 HostAddress = "192.168.0.30",
                 UniqueId = "DEAD-BEEF",
                 PlatformName = "WINDOWS",
