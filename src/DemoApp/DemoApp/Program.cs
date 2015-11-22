@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using DeviceDiscovery;
 using log4net;
 using Microsoft.Owin.Hosting;
 

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Net;
-using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-namespace DemoApp
+namespace DeviceDiscovery
 {
     public class DeviceLocator : IDeviceLocator
     {
@@ -28,8 +27,7 @@ namespace DemoApp
             byte[] requestBytes = Encoding.ASCII.GetBytes(request);
 
             var responseThread = new Thread(GetSearchResponse);
-            _socket.SendTo(requestBytes, SocketFlags.None,
-                new IPEndPoint(IPAddress.Parse(Constants.MulticastAddress), Constants.MulticastPort));
+            _socket.SendTo(requestBytes, new IPEndPoint(IPAddress.Parse(Constants.MulticastAddress), Constants.MulticastPort));
             responseThread.Start();
             Thread.Sleep(Convert.ToInt32(timeout.TotalMilliseconds));
             _socket.Close();

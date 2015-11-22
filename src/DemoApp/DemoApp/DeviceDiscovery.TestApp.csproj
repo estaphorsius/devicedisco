@@ -88,33 +88,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Constants.cs" />
-    <Compile Include="DeviceInformation.cs" />
-    <Compile Include="DeviceLocator.cs" />
-    <Compile Include="DiscoveredDevices.cs" />
-    <Compile Include="DiscoveryListener.cs" />
-    <Compile Include="IDeviceLocator.cs" />
-    <Compile Include="IDiscoveryClient.cs" />
-    <Compile Include="IDiscoveryListener.cs" />
-    <Compile Include="IDiscoveryService.cs" />
-    <Compile Include="IMessageParser.cs" />
-    <Compile Include="IRequestFactory.cs" />
-    <Compile Include="IResponseFactory.cs" />
-    <Compile Include="ISocket.cs" />
-    <Compile Include="ISocketFactory.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="MessageParser.cs" />
     <Compile Include="OwinStartup.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResponseFactory.cs" />
-    <Compile Include="SearchRequestFactory.cs" />
-    <Compile Include="Socket.cs" />
-    <Compile Include="SocketFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DeviceDiscovery\DeviceDiscovery.csproj">
+      <Project>{7ECF5997-52B1-43B8-B968-491DA15036E2}</Project>
+      <Name>DeviceDiscovery</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

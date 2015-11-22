@@ -1,6 +1,4 @@
-﻿using System.Net.Sockets;
-
-namespace DemoApp
+﻿namespace DeviceDiscovery
 {
     public interface ISocketFactory
     {

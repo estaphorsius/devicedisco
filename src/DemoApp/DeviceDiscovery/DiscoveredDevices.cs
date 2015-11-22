@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using log4net;
 
-namespace DemoApp
+namespace DeviceDiscovery
 {
     public static class DiscoveredDevices
     {

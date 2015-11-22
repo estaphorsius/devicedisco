@@ -1,6 +1,6 @@
 ﻿using log4net;
 
-namespace DemoApp
+namespace DeviceDiscovery
 {
     public class ResponseFactory : IResponseFactory
     {

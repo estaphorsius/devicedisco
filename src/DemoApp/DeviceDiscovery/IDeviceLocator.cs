@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DemoApp
+namespace DeviceDiscovery
 {
     public interface IDeviceLocator
     {

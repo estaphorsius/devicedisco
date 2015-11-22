@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace DemoApp
+namespace DeviceDiscovery
 {
     public class DeviceInformation
     {

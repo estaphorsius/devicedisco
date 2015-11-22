@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace DemoApp
+namespace DeviceDiscovery
 {
-    interface IDiscoveryListener
+    public interface IDiscoveryListener
     {
         void Listen();
         void Stop();

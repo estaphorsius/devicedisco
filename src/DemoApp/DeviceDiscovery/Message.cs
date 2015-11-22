@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DemoApp
+namespace DeviceDiscovery
 {
     public class Message
     {
@@ -8,6 +8,7 @@ namespace DemoApp
         {
             Headers = new Dictionary<string, string>();
         }
+
         public string MessageLine { get; set; }
         public Dictionary<string, string> Headers { get; private set; }
     }

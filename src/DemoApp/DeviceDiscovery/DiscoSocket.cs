@@ -1,14 +1,22 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Sockets;
 
-namespace DemoApp
+namespace DeviceDiscovery
 {
     public class DiscoSocket : ISocket
     {
         private readonly Socket _socket;
-        public DiscoSocket(Socket socket)
+        public DiscoSocket()
         {
+            Socket socket = null;
+            EndPoint localEndPoint = new IPEndPoint(IPAddress.Any, Constants.MulticastPort);
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.Bind(localEndPoint);
+            socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership,
+                new MulticastOption(IPAddress.Parse(Constants.MulticastAddress)));
+            socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.MulticastTimeToLive, 2);
+
             _socket = socket;
         }
 
@@ -31,11 +39,6 @@ namespace DemoApp
         public int SendTo(byte[] buffer, EndPoint remoteEndPoint)
         {
             return _socket.SendTo(buffer, remoteEndPoint);
-        }
-
-        public int SendTo(byte[] buffer, SocketFlags flags, EndPoint remoteEndPoint)
-        {
-            return _socket.SendTo(buffer, SocketFlags.None, remoteEndPoint);
         }
 
         public void Close()

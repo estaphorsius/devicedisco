@@ -1,4 +1,4 @@
-﻿namespace DemoApp
+﻿namespace DeviceDiscovery
 {
     public interface IMessageParser
     {
