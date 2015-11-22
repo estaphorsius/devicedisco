@@ -4,7 +4,7 @@ using DeviceDiscovery;
 using log4net;
 using Microsoft.Owin.Hosting;
 
-namespace DemoApp
+namespace DeviceDiscovery.TestApp
 {
     class Program
     {

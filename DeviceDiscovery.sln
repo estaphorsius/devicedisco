@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceDiscovery.TestApp", "DemoApp\DeviceDiscovery.TestApp.csproj", "{41DBC8AE-A8F3-45A9-9082-8FACB6BEC617}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceDiscovery.TestApp", "src\DeviceDiscovery.TestApp\DeviceDiscovery.TestApp.csproj", "{41DBC8AE-A8F3-45A9-9082-8FACB6BEC617}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceDiscovery", "DeviceDiscovery\DeviceDiscovery.csproj", "{7ECF5997-52B1-43B8-B968-491DA15036E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceDiscovery", "src\DeviceDiscovery\DeviceDiscovery.csproj", "{7ECF5997-52B1-43B8-B968-491DA15036E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceDiscovery.Test", "DeviceDiscovery.Test\DeviceDiscovery.Test.csproj", "{F3176DCE-3D8D-4466-A30A-76F47D067B23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceDiscovery.Test", "src\DeviceDiscovery.Test\DeviceDiscovery.Test.csproj", "{F3176DCE-3D8D-4466-A30A-76F47D067B23}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

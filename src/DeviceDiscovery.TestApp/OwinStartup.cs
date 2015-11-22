@@ -1,13 +1,13 @@
 ﻿using System.Web.Http;
-using DemoApp;
+using DeviceDiscovery.TestApp;
+using Microsoft.Owin;
 using Microsoft.Owin.FileSystems;
 using Microsoft.Owin.StaticFiles;
 using Owin;
-using Microsoft.Owin;
 
 [assembly: OwinStartup(typeof(OwinStartup))]
 
-namespace DemoApp
+namespace DeviceDiscovery.TestApp
 {
     public class OwinStartup
     {
