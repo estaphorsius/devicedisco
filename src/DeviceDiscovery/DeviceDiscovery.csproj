@@ -52,11 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="DeviceInfoCollector.cs" />
     <Compile Include="DeviceInformation.cs" />
     <Compile Include="DeviceLocator.cs" />
     <Compile Include="DiscoSocket.cs" />
     <Compile Include="DiscoveredDevices.cs" />
     <Compile Include="DiscoveryListener.cs" />
+    <Compile Include="IDeviceInfoCollector.cs" />
     <Compile Include="IDeviceLocator.cs" />
     <Compile Include="IDiscoveryListener.cs" />
     <Compile Include="IMessageParser.cs" />

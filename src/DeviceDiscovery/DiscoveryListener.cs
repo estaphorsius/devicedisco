@@ -11,6 +11,7 @@ namespace DeviceDiscovery
         private readonly ISocketFactory _socketFactory;
         private readonly IResponseFactory _responseFactory;
         private readonly IMessageParser _messageParser;
+        private readonly IDeviceInfoCollector _deviceInfoCollector;
         private readonly ILog _log = LogManager.GetLogger(typeof(DiscoveryListener));
 
         private ISocket _listeningSocket;
@@ -27,11 +28,12 @@ namespace DeviceDiscovery
             public byte[] Buffer { get; private set; }
         }
 
-        public DiscoveryListener(ISocketFactory socketFactory, IResponseFactory responseFactory, IMessageParser messageParser)
+        public DiscoveryListener(ISocketFactory socketFactory, IResponseFactory responseFactory, IMessageParser messageParser, IDeviceInfoCollector deviceInfoCollector)
         {
             _socketFactory = socketFactory;
             _responseFactory = responseFactory;
             _messageParser = messageParser;
+            _deviceInfoCollector = deviceInfoCollector;
             _stopped = true;
             _started = false;
         }
@@ -81,7 +83,7 @@ namespace DeviceDiscovery
                     {
                         Task.Run(() =>
                         {
-                            var dev = DeviceInformation.CreateFromMessage(message);
+                            var dev = _deviceInfoCollector.Collect(message);
                             this.DeviceDiscovered?.Invoke(this, dev);
                         });
 

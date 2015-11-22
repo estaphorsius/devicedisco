@@ -31,9 +31,9 @@ namespace DeviceDiscovery.TestApp
 
 
             var responseFactory = new ResponseFactory(deviceInformation, messageParser);
-            _deviceLocator = new DeviceLocator(new SocketFactory(), new SearchRequestFactory(), new MessageParser());
+            _deviceLocator = new DeviceLocator(new SocketFactory(), new SearchRequestFactory(), new MessageParser(), new DeviceInfoCollector());
             _deviceLocator.DeviceDiscovered += OnDeviceDiscovered;
-            _discoveryListener = new DiscoveryListener(new SocketFactory(), responseFactory, messageParser);
+            _discoveryListener = new DiscoveryListener(new SocketFactory(), responseFactory, messageParser, new DeviceInfoCollector());
             _discoveryListener.DeviceDiscovered += OnDeviceDiscovered;
             // _discoveryListener.Listen();
 

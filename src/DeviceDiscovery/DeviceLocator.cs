@@ -10,21 +10,25 @@ namespace DeviceDiscovery
         private readonly ISocketFactory _socketFactory;
         private readonly IRequestFactory _requestFactory;
         private readonly IMessageParser _messageParser;
+        private readonly IDeviceInfoCollector _deviceInfoCollector;
         private ISocket _socket;
 
-        public DeviceLocator(ISocketFactory socketFactory, IRequestFactory requestFactory, IMessageParser messageParser)
+        public DeviceLocator(ISocketFactory socketFactory, IRequestFactory requestFactory, IMessageParser messageParser, IDeviceInfoCollector deviceInfoCollector)
         {
             _socketFactory = socketFactory;
             _requestFactory = requestFactory;
             _messageParser = messageParser;
+            _deviceInfoCollector = deviceInfoCollector;
         }
 
+
+        public event EventHandler<DeviceInformation> DeviceDiscovered;
 
         public void FindDevices(TimeSpan timeout)
         {
             _socket = _socketFactory.CreateClientSocket();
-            string request = _requestFactory.CreateMessage();
-            byte[] requestBytes = Encoding.ASCII.GetBytes(request);
+            var request = _requestFactory.CreateMessage();
+            var requestBytes = Encoding.ASCII.GetBytes(request);
 
             var responseThread = new Thread(GetSearchResponse);
             _socket.SendTo(requestBytes, new IPEndPoint(IPAddress.Parse(Constants.MulticastAddress), Constants.MulticastPort));
@@ -32,10 +36,6 @@ namespace DeviceDiscovery
             Thread.Sleep(Convert.ToInt32(timeout.TotalMilliseconds));
             _socket.Close();
         }
-
-        public event EventHandler<DeviceInformation> DeviceDiscovered;
-
-
 
         private void GetSearchResponse()
         {
@@ -45,20 +45,20 @@ namespace DeviceDiscovery
                 {
                     var response = new byte[8000];
                     EndPoint ep = new IPEndPoint(IPAddress.Any, Constants.MulticastPort);
-                    int receivedByteCount = _socket.ReceiveFrom(response, ref ep);
+                    var receivedByteCount = _socket.ReceiveFrom(response, ref ep);
 
                     var str = Encoding.UTF8.GetString(response, 0, receivedByteCount);
-                    Message msg = _messageParser.Parse(str);
+                    var msg = _messageParser.Parse(str);
                     if (msg.MessageLine == "HTTP/1.1 200 OK")
                     {
-                        DeviceInformation dev = DeviceInformation.CreateFromMessage(msg);
+                        var dev = _deviceInfoCollector.Collect(msg);
                         this.DeviceDiscovered?.Invoke(this, dev);
                     }
                 }
             }
             catch
             {
-                //TODO handle exception for when connection closes
+                // ignored
             }
         }
     }
