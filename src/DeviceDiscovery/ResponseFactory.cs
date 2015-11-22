@@ -6,7 +6,7 @@ namespace DeviceDiscovery
     {
         private readonly DeviceInformation _deviceInformation;
         private readonly IMessageParser _messageParser;
-        private readonly ILog _log = LogManager.GetLogger(typeof (ResponseFactory));
+        private readonly ILog _log = LogManager.GetLogger(typeof(ResponseFactory));
 
         public ResponseFactory(DeviceInformation deviceInformation, IMessageParser messageParser)
         {
@@ -18,7 +18,7 @@ namespace DeviceDiscovery
         {
             var message = _messageParser.Parse(requestString);
 
-            if (message.MessageLine.StartsWith("M-SEARCH"))
+            if (message.MessageLine.StartsWith(Constants.SearchMessage))
             {
                 return CreateSearchResponse(message);
             }
@@ -32,6 +32,7 @@ namespace DeviceDiscovery
                 "HTTP/1.1 200 OK\r\n" +
                 "LOCATION: " + _deviceInformation.Location + "\r\n" +
                 "USN: " + _deviceInformation.UniqueId + "\r\n" +
+                "SERVER: " + _deviceInformation.PlatformName + "\r\n" +
                 "\r\n";
 
             return response;
