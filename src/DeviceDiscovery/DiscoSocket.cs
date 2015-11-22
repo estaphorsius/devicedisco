@@ -20,10 +20,9 @@ namespace DeviceDiscovery
             _socket = socket;
         }
 
-        public void BeginReceiveFrom(byte[] buffer, ref EndPoint remoteEndPoint, AsyncCallback asyncCallback,
-            object state)
+        public IAsyncResult BeginReceiveFrom(byte[] buffer, ref EndPoint remoteEndPoint, AsyncCallback asyncCallback, object state)
         {
-            _socket.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref remoteEndPoint, asyncCallback, state);
+            return _socket.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref remoteEndPoint, asyncCallback, state);
         }
 
         public int EndReceiveFrom(IAsyncResult ar, ref EndPoint remoteEndPoint)

@@ -22,11 +22,6 @@ namespace DeviceDiscovery
             {
                 return CreateSearchResponse(message);
             }
-            else if (message.MessageLine.StartsWith("NOTIFY"))
-            {
-                // do not send a response but handle the notification 
-                ProcessNotification(message);
-            }
 
             return null;
         }
@@ -40,11 +35,6 @@ namespace DeviceDiscovery
                 "\r\n";
 
             return response;
-        }
-
-        private void ProcessNotification(Message notificationMessage)
-        {
-            _log.InfoFormat("NOTIFY FROM {0}", notificationMessage.Headers["LOCATION"]);
         }
     }
 }

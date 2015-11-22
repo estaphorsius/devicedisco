@@ -18,7 +18,7 @@ namespace DeviceDiscovery.TestApp
         {
             log4net.Config.XmlConfigurator.Configure();
 
-            //WebApp.Start<OwinStartup>("http://+:4500/");
+            WebApp.Start<OwinStartup>("http://+:80/");
             var messageParser = new MessageParser();
             var deviceInformation = new DeviceInformation
             {
@@ -35,12 +35,13 @@ namespace DeviceDiscovery.TestApp
             _deviceLocator.DeviceDiscovered += OnDeviceDiscovered;
             _discoveryListener = new DiscoveryListener(new SocketFactory(), responseFactory, messageParser, new DeviceInfoCollector());
             _discoveryListener.DeviceDiscovered += OnDeviceDiscovered;
-            // _discoveryListener.Listen();
+
+            _discoveryListener.Listen();
 
             _searchTimer = new Timer(
                 SearchTimerFunc,
                 null,
-                TimeSpan.FromSeconds(0),
+                TimeSpan.FromSeconds(30),
                 TimeSpan.FromSeconds(30));
 
             Console.Read();

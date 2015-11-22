@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System.Configuration;
+using System.Web.Http;
 using DeviceDiscovery.TestApp;
 using Microsoft.Owin;
 using Microsoft.Owin.FileSystems;
@@ -13,11 +14,11 @@ namespace DeviceDiscovery.TestApp
     {
         public void Configuration(IAppBuilder app)
         {
-            HttpConfiguration httpConfig = new HttpConfiguration();
+            var httpConfig = new HttpConfiguration();
             app.UseWebApi(httpConfig);
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileSystem = new PhysicalFileSystem("..\\..")
+                FileSystem = new PhysicalFileSystem(ConfigurationManager.AppSettings["wwwroot"])
             });
         }
     }

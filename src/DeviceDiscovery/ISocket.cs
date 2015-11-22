@@ -5,7 +5,7 @@ namespace DeviceDiscovery
 {
     public interface ISocket
     {
-        void BeginReceiveFrom(byte[] buffer, ref EndPoint remoteEndPoint, AsyncCallback asynCallback, object state);
+        IAsyncResult BeginReceiveFrom(byte[] buffer, ref EndPoint remoteEndPoint, AsyncCallback asynCallback, object state);
         int EndReceiveFrom(IAsyncResult ar, ref EndPoint remoteEndPoint);
         int ReceiveFrom(byte[] buffer, ref EndPoint remoteEndPoint);
         int SendTo(byte[] buffer, EndPoint remoteEndPoint);

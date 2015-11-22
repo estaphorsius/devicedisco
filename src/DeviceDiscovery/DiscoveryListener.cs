@@ -18,9 +18,9 @@ namespace DeviceDiscovery
         private bool _started;
         private bool _stopped;
 
-        private class ServerState
+        private class ListenerState
         {
-            public ServerState()
+            public ListenerState()
             {
                 Buffer = new byte[1024];
             }
@@ -40,14 +40,13 @@ namespace DeviceDiscovery
 
         public void Listen()
         {
-
             _listeningSocket = _socketFactory.CreateListeningSocket();
 
             EndPoint remoteEndpoint = new IPEndPoint(IPAddress.Any, Constants.MulticastPort);
-            var serverState = new ServerState();
+            var listenerState = new ListenerState();
 
-            _listeningSocket.BeginReceiveFrom(serverState.Buffer,
-                ref remoteEndpoint, OnReceive, serverState);
+            _listeningSocket.BeginReceiveFrom(listenerState.Buffer,
+                ref remoteEndpoint, OnReceive, listenerState);
 
             _stopped = false;
             _started = true;
@@ -55,7 +54,6 @@ namespace DeviceDiscovery
 
         public void Stop()
         {
-
             if (!_started) return;
 
             _started = false;
@@ -75,11 +73,11 @@ namespace DeviceDiscovery
                 {
                     EndPoint remoteEndpoint = new IPEndPoint(IPAddress.Any, Constants.MulticastPort);
                     var bytesReceived = _listeningSocket.EndReceiveFrom(ar, ref remoteEndpoint);
-                    var serverState = (ServerState)ar.AsyncState;
-                    var requestString = Encoding.ASCII.GetString(serverState.Buffer, 0, bytesReceived);
+                    var listenerState = (ListenerState)ar.AsyncState;
+                    var requestString = Encoding.ASCII.GetString(listenerState.Buffer, 0, bytesReceived);
                     var message = _messageParser.Parse(requestString);
 
-                    if (message.MessageLine.StartsWith("NOTIFY"))
+                    if (message.MessageLine.StartsWith(Constants.NotifyMessage))
                     {
                         Task.Run(() =>
                         {
@@ -88,7 +86,7 @@ namespace DeviceDiscovery
                         });
 
                     }
-                    else if (message.MessageLine.StartsWith("M-SEARCH"))
+                    else if (message.MessageLine.StartsWith(Constants.SearchMessage))
                     {
                         var responseString = _responseFactory.CreateResponse(requestString);
 
@@ -100,9 +98,9 @@ namespace DeviceDiscovery
                     }
 
                     // enter new listening loop
-                    serverState = new ServerState();
-                    _listeningSocket.BeginReceiveFrom(serverState.Buffer,
-                        ref remoteEndpoint, OnReceive, serverState);
+                    listenerState = new ListenerState();
+                    _listeningSocket.BeginReceiveFrom(listenerState.Buffer,
+                        ref remoteEndpoint, OnReceive, listenerState);
                 }
             }
             catch (ObjectDisposedException)

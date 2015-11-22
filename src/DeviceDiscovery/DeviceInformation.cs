@@ -18,8 +18,6 @@ namespace DeviceDiscovery
         public string ManufacturerName { get; set; }
         public string ManufacturerUrl { get; set; }
         public string FriendlyName { get; set; }
-
         public DateTime LastSeen { get; set; }
-
     }
 }
