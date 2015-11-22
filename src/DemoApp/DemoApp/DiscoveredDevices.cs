@@ -17,8 +17,8 @@ namespace DemoApp
             if (Devices.ContainsKey(deviceInformation.UniqueId))
             {
                 Devices[deviceInformation.UniqueId] = deviceInformation;
+                return;
             }
-
 
             Devices.Add(deviceInformation.UniqueId, deviceInformation);
 
