@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Net;
 using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace DeviceDiscovery
 {
@@ -10,6 +12,13 @@ namespace DeviceDiscovery
         public string Location { get; set; }
         public string PlatformName { get; set; }
         public string PlatformVersion { get; set; }
+        public string ModelName { get; set; }
+        public string ModelDescription { get; set; }
+        public string PresentationUrl { get; set; }
+        public string ManufacturerName { get; set; }
+        public string ManufacturerUrl { get; set; }
+        public string FriendlyName { get; set; }
+
         public DateTime LastSeen { get; set; }
 
         public static DeviceInformation CreateFromMessage(Message message)
@@ -30,6 +39,8 @@ namespace DeviceDiscovery
                     var m = regex.Match(device.Location);
                     device.HostAddress = m.Groups[0].Value;
                 }
+
+                HandleLocation(device);
             }
 
             if (message.Headers.ContainsKey("SERVER"))
@@ -38,6 +49,38 @@ namespace DeviceDiscovery
             }
 
             return device;
+        }
+
+        private static void HandleLocation(DeviceInformation device)
+        {
+            using (WebClient wc = new WebClient())
+            {
+                try
+                {
+                    string xmlData = wc.DownloadString(device.Location);
+
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.LoadXml(xmlData);
+                    if (xmlDoc.DocumentElement != null)
+                    {
+                        XmlNamespaceManager nsmgr = new XmlNamespaceManager(xmlDoc.NameTable);
+                        nsmgr.AddNamespace("dev", xmlDoc.DocumentElement.NamespaceURI);
+                        var name = xmlDoc.SelectSingleNode("/dev:root/dev:device/dev:friendlyName", nsmgr);
+                        var presentationUrl = xmlDoc.SelectSingleNode("/dev:root/dev:device/dev:presentationURL", nsmgr);
+                        var modelName = xmlDoc.SelectSingleNode("/dev:root/dev:device/dev:modelName", nsmgr);
+                        var modelDesc = xmlDoc.SelectSingleNode("/dev:root/dev:device/dev:modelDescription", nsmgr);
+
+                        device.FriendlyName = name?.InnerText;
+                        device.PresentationUrl = presentationUrl?.InnerText;
+                        device.ModelName = modelName?.InnerText;
+                        device.ModelDescription = modelDesc?.InnerText;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+            }
         }
     }
 }

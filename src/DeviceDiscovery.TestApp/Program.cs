@@ -18,7 +18,7 @@ namespace DeviceDiscovery.TestApp
         {
             log4net.Config.XmlConfigurator.Configure();
 
-            WebApp.Start<OwinStartup>("http://+:4500/");
+            //WebApp.Start<OwinStartup>("http://+:4500/");
             var messageParser = new MessageParser();
             var deviceInformation = new DeviceInformation
             {

@@ -47,8 +47,8 @@ namespace DeviceDiscovery
             }
 
             return new KeyValuePair<string, string>(
-                headerString.Substring(0, idx),
-                headerString.Substring(idx + 1));
+                headerString.Substring(0, idx).Trim(),
+                headerString.Substring(idx + 1).Trim());
 
         }
     }

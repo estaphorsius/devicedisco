@@ -14,7 +14,6 @@ namespace DeviceDiscovery
         private readonly ILog _log = LogManager.GetLogger(typeof(DiscoveryListener));
 
         private ISocket _listeningSocket;
-        private readonly object _locker = new object();
         private bool _started;
         private bool _stopped;
 
@@ -77,10 +76,14 @@ namespace DeviceDiscovery
                     var serverState = (ServerState)ar.AsyncState;
                     var requestString = Encoding.ASCII.GetString(serverState.Buffer, 0, bytesReceived);
                     var message = _messageParser.Parse(requestString);
-                    var dev = DeviceInformation.CreateFromMessage(message);
+
                     if (message.MessageLine.StartsWith("NOTIFY"))
                     {
-                        Task.Run(() => this.DeviceDiscovered?.Invoke(this, dev));
+                        Task.Run(() =>
+                        {
+                            var dev = DeviceInformation.CreateFromMessage(message);
+                            this.DeviceDiscovered?.Invoke(this, dev);
+                        });
 
                     }
                     else if (message.MessageLine.StartsWith("M-SEARCH"))
@@ -90,7 +93,6 @@ namespace DeviceDiscovery
                         if (responseString != null)
                         {
                             var responseBuffer = Encoding.ASCII.GetBytes(responseString);
-                            // send response
                             _listeningSocket.SendTo(responseBuffer, remoteEndpoint);
                         }
                     }

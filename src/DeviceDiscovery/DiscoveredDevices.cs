@@ -35,10 +35,13 @@ namespace DeviceDiscovery
         private static void LogDevice(DeviceInformation d)
         {
             Log.InfoFormat("Discovered a new device:");
-            Log.InfoFormat("HostAddress:   {0}", d.HostAddress);
-            Log.InfoFormat("Location:      {0}", d.Location);
-            Log.InfoFormat("UniqueId:      {0}", d.UniqueId);
-            Log.InfoFormat("Platform:      {0}", d.PlatformName);
+            Log.InfoFormat("FriendlyName  : {0}", d.FriendlyName);
+            Log.InfoFormat("ModelName     : {0}", d.ModelName);
+            Log.InfoFormat("ModelDesc     : {0}", d.ModelDescription);
+            Log.InfoFormat("HostAddress   : {0}", d.HostAddress);
+            Log.InfoFormat("Location      : {0}", d.Location);
+            Log.InfoFormat("UniqueId      : {0}", d.UniqueId);
+            Log.InfoFormat("Platform      : {0}", d.PlatformName);
         }
     }
 }
