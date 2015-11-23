@@ -4,8 +4,35 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css" />
 </head>
-<body>
-    <h4>The following devices have been found in the network.</h4>
+<body ng-app="App">
+    <div class="container">
+        <h4>The following devices have been found in the network.</h4>
+        <div ng-controller="DeviceController as vm">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>HostAddress</th>
+                        <th>Name</th>
+                        <th>ModelName</th>
+                        <th>Location</th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="device in vm.devices">
+                    <tr>
+                        <td>{{device.hostAddress}}</td>
+                        <td>{{device.friendlyName}}</td>
+                        <td>{{device.modelName}}</td>
+                        <td><a href="{{device.location}}" target="_blank">{{device.location}}</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <script src="lib/angular/angular.js"></script>
+    <script src="app/App.js"></script>
+    <script src="app/DeviceController.js"></script>
 </body>
 </html>

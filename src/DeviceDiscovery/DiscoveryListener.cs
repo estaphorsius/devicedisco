@@ -64,6 +64,7 @@ namespace DeviceDiscovery
         }
 
         public event EventHandler<DeviceInformation> DeviceDiscovered;
+        public event EventHandler<Message> SearchMessageReceived;
 
         private void OnReceive(IAsyncResult ar)
         {
@@ -88,6 +89,8 @@ namespace DeviceDiscovery
                     }
                     else if (message.MessageLine.StartsWith(Constants.SearchMessage))
                     {
+                        this.SearchMessageReceived?.Invoke(this, message);
+
                         var responseString = _responseFactory.CreateResponse(requestString);
 
                         if (responseString != null)

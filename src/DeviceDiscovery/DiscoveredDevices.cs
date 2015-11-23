@@ -28,7 +28,7 @@ namespace DeviceDiscovery
         public static List<DeviceInformation> ToList()
         {
             var result = new List<DeviceInformation>(Devices.Count);
-            result.AddRange(from object device in Devices select device as DeviceInformation);
+            result.AddRange(Devices.Values.Cast<DeviceInformation>());
             return result;
         }
 

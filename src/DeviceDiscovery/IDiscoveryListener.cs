@@ -7,5 +7,6 @@ namespace DeviceDiscovery
         void Listen();
         void Stop();
         event EventHandler<DeviceInformation> DeviceDiscovered;
+        event EventHandler<Message> SearchMessageReceived;
     }
 }
