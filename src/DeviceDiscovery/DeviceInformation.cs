@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Xml;
 
 namespace DeviceDiscovery
 {

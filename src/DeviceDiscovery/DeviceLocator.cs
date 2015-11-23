@@ -52,7 +52,7 @@ namespace DeviceDiscovery
                     if (msg.MessageLine == "HTTP/1.1 200 OK")
                     {
                         var dev = _deviceInfoCollector.Collect(msg);
-                        this.DeviceDiscovered?.Invoke(this, dev);
+                        DeviceDiscovered?.Invoke(this, dev);
                     }
                 }
             }

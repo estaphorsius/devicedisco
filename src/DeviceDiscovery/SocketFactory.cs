@@ -1,7 +1,4 @@
-﻿using System.Net;
-using System.Net.Sockets;
-
-namespace DeviceDiscovery
+﻿namespace DeviceDiscovery
 {
     public class SocketFactory : ISocketFactory
     {
@@ -12,11 +9,6 @@ namespace DeviceDiscovery
 
         public ISocket CreateClientSocket()
         {
-            //var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            //socket.Bind(new IPEndPoint(IPAddress.Any, Constants.MulticastPort));
-            //socket.SetSocketOption(SocketOptionLevel.IP, SocketOptionName.AddMembership,
-            //    new MulticastOption(IPAddress.Parse(Constants.MulticastAddress), IPAddress.Any));
-
             var result = new DiscoSocket();
             return result;
         }

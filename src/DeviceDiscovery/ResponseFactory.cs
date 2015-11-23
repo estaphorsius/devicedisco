@@ -20,13 +20,13 @@ namespace DeviceDiscovery
 
             if (message.MessageLine.StartsWith(Constants.SearchMessage))
             {
-                return CreateSearchResponse(message);
+                return CreateSearchResponse();
             }
 
             return null;
         }
 
-        private string CreateSearchResponse(Message requestMessage)
+        private string CreateSearchResponse()
         {
             var response =
                 "HTTP/1.1 200 OK\r\n" +

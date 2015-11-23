@@ -83,13 +83,13 @@ namespace DeviceDiscovery
                         Task.Run(() =>
                         {
                             var dev = _deviceInfoCollector.Collect(message);
-                            this.DeviceDiscovered?.Invoke(this, dev);
+                            DeviceDiscovered?.Invoke(this, dev);
                         });
 
                     }
                     else if (message.MessageLine.StartsWith(Constants.SearchMessage))
                     {
-                        this.SearchMessageReceived?.Invoke(this, message);
+                        SearchMessageReceived?.Invoke(this, message);
 
                         var responseString = _responseFactory.CreateResponse(requestString);
 
